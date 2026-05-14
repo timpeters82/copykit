@@ -135,7 +135,7 @@ findAneuploidCells <- function(scCNA,
     # reordering info to add to metadata
     info <-
         cv_df_low_cv[match(
-            SummarizedExperiment::colData(scCNA)$sample,
+            rownames(SummarizedExperiment::colData(scCNA)),
             cv_df_low_cv$sample
         ), ]
 
