@@ -272,10 +272,12 @@ runSegmentation <- function(scCNA,
     message("Merging levels.")
 
     if (S4Vectors::metadata(scCNA)$vst == "ft") {
-        smooth_counts_df[smooth_counts_df == 0] <- 1e-4
-        seg_df[seg_df == 0] <- 1e-4
+        smooth_counts_df[smooth_counts_df == 0] <- 1e-04
+        seg_df[seg_df == 0] <- 1e-04
         smooth_counts_df <- log2(smooth_counts_df)
+        rownames(smooth_counts_df) <- rownames(scCNA)
         seg_df <- log2(seg_df)
+        rownames(seg_df) <- rownames(scCNA)
     }
 
     seg_ml_list <- BiocParallel::bplapply(seq_along(seg_df), function(i) {
@@ -320,6 +322,7 @@ runSegmentation <- function(scCNA,
 
     # saving as segment ratios
     seg_ratios <- sweep(seg_ratio_df, 2, apply(seg_ratio_df, 2, mean), "/")
+    rownames(seg_ratios) <- rownames(scCNA)
     SummarizedExperiment::assay(scCNA, name) <- round(seg_ratios, 2)
 
 
