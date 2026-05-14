@@ -275,11 +275,12 @@ runSegmentation <- function(scCNA,
         smooth_counts_df[smooth_counts_df == 0] <- 1e-04
         seg_df[seg_df == 0] <- 1e-04
         smooth_counts_df <- log2(smooth_counts_df)
-        rownames(smooth_counts_df) <- rownames(scCNA)
         seg_df <- log2(seg_df)
-        rownames(seg_df) <- rownames(scCNA)
     }
 
+    rownames(smooth_counts_df) <- rownames(scCNA)
+    rownames(seg_df) <- rownames(scCNA)
+  
     seg_ml_list <- BiocParallel::bplapply(seq_along(seg_df), function(i) {
         cell_name <- names(seg_df)[i]
         smoothed_cell_ct <- smooth_counts_df[, i]
