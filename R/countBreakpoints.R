@@ -47,7 +47,7 @@
     brkpt_count <- rowSums(brkpt_by_chrom_df)
 
     # making sure order is identical
-    brkpt_count <- brkpt_count[SummarizedExperiment::colData(scCNA)$sample]
+    brkpt_count <- brkpt_count[rownames(SummarizedExperiment::colData(scCNA))]
 
     SummarizedExperiment::colData(scCNA)$breakpoint_count <-
         brkpt_count
