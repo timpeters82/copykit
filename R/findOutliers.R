@@ -85,7 +85,7 @@ findOutliers <- function(scCNA,
         "Adding information to metadata. Access with colData(scCNA)."
     )
     if (identical(
-        SummarizedExperiment::colData(scCNA)$sample,
+        rownames(SummarizedExperiment::colData(scCNA)),
         dst_knn_df$sample
     )) {
         SummarizedExperiment::colData(scCNA)$cell_corr_value <-
